@@ -1,5 +1,6 @@
 package mx.tec.avisos.ui.screens
 
+import android.graphics.Camera
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -52,6 +53,7 @@ fun PublicarScreen(
     onTituloChange: (String) -> Unit,
     onCuerpoChange: (String) -> Unit,
     onGaleria: () -> Unit,
+    onCamara: () -> Unit,
     onQuitarImagen: () -> Unit,
     onPublicar: () -> Unit,
     onCancelar: () -> Unit,
@@ -107,7 +109,6 @@ fun PublicarScreen(
                 contador = "${uiState.cuerpo.length}/${AvisoValidator.CUERPO_MAX}",
                 lineasMinimas = 4
             )
-            // La imagen es opcional: una forma de conseguirla, y una de quitarla.
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(espaciado.sm)
@@ -116,6 +117,11 @@ fun PublicarScreen(
                     Icon(painterResource(R.drawable.ic_galeria), contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(espaciado.sm))
                     Text("Galería")
+                }
+                OutlinedButton(onClick = onCamara, enabled = !uiState.enviando) {
+                    Icon(painterResource(R.drawable.ic_camara), contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(espaciado.sm))
+                    Text("Cámara")
                 }
                 if (uiState.imagen != null) {
                     TextButton(onClick = onQuitarImagen, enabled = !uiState.enviando) { Text("Quitar") }
@@ -157,7 +163,7 @@ private fun PublicarPreview() {
             ),
             autor = "profe.prueba",
             onTituloChange = {}, onCuerpoChange = {}, onPublicar = {}, onCancelar = {},
-            onGaleria = {}, onQuitarImagen = {}
+            onGaleria = {}, onQuitarImagen = {}, onCamara = {}
 
         )
     }
